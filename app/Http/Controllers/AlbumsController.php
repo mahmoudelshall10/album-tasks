@@ -7,6 +7,9 @@ use App\Models\FootAlbums;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
+
 class AlbumsController extends Controller
 {
 
@@ -44,7 +47,21 @@ class AlbumsController extends Controller
      */
     public function store(Request $request)
     {
+        $rules =
+        [
+            'name'  => 'required|string|max:255',
+
+        ];
+
+        $names =
+        [
+            'name'                  =>'Name',
+        ];
+
+        $data = $this->validate($request , $rules , [] , $names);
+
         $album = new Albums();
+        $album->name = $request->name;
         $album->created_by = Auth::user()->id;
         $album->save();
 
@@ -87,8 +104,22 @@ class AlbumsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $album = Albums::find($id);
+        $rules =
+        [
+            'name'  => 'required|string|max:255',
 
+        ];
+
+        $names =
+        [
+            'name'                  =>'Name',
+        ];
+
+        $data = $this->validate($request , $rules , [] , $names);
+
+        $album = Albums::find($id);
+        $album->name = $request->name;
+        $album->save();
         // FootAlbums::whereNull('album_id')->where('created_by',Auth::user()->id)->update(['album_id' => $album->id]);
 
         return redirect()->route('albums.index')
@@ -106,16 +137,18 @@ class AlbumsController extends Controller
         $album = Albums::find($id);
 
         $attachments = FootAlbums::where('album_id',$id)->get();
-        foreach($attachments as $attachment){
 
-            $path = 'storage/app/attachments_folder/' . $attachment->file_path;
-            if($attachment->file_path){
-                if(file_exists($path))
-                {
-                    unlink($path);
+            foreach($attachments as $attachment){
+
+                $path = 'storage/app/attachments_folder/' . $attachment->file_path;
+                if($attachment->file_path){
+                    if(file_exists($path))
+                    {
+                        unlink($path);
+                    }
                 }
             }
-        }
+
 
         $attachments = FootAlbums::where('album_id',$id)->delete();
 
@@ -123,5 +156,56 @@ class AlbumsController extends Controller
 
         return redirect()->back()
                 ->with('success','Album deleted successfully');
+    }
+
+    public function CopyAlbums(Request $request,$id){
+        $rules =
+        [
+            'name'  => 'required|string|max:255',
+
+        ];
+
+        $names =
+        [
+            'name'                  =>'Name',
+        ];
+
+        $data = $this->validate($request , $rules , [] , $names);
+
+
+        $album = Albums::find($id);
+
+        $newAlbum = $album->replicate();
+        $newAlbum->name = $request->name;
+
+        $newAlbum->created_at  = now();
+        $newAlbum->updated_at  = now();
+        $newAlbum->save();
+
+        $sourceFilePath = 'storage/app/attachments_folder/';
+
+        foreach($album->FootAlbums as $objalbum){
+            $new_file = new FootAlbums();
+            $new_file->name       = $objalbum->name;
+            $new_file->type       = $objalbum->type;
+
+            $oldFilePath = $sourceFilePath . $objalbum->file_path;
+            $newFilePath = $newAlbum->id . '-' . $objalbum->file_path;
+
+            // dd(File::exists($oldFilePath));
+
+            if (File::exists($oldFilePath)) {
+                File::copy($newFilePath, $oldFilePath);
+            }
+
+            $new_file->file_path  = $newFilePath;
+            $new_file->album_id   = $newAlbum->id;
+            $new_file->created_by =  Auth::user()->id;
+            $new_file->save();
+        }
+
+
+        return redirect()->back()
+        ->with('success','Album copied successfully');
     }
 }

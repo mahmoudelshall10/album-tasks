@@ -23,6 +23,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('albums', App\Http\Controllers\AlbumsController::class);
+Route::post('copy_album/{id}',[App\Http\Controllers\AlbumsController::class,'CopyAlbums'])->name('albums.copy_album');
 
 Route::post('foot_albums/upload_single_image',[App\Http\Controllers\FootAlbumsController::class,'uploadSingleImage'])->name('foot_albums.uploadSingleImage');
 Route::post('foot_albums/upload_multi_image',[App\Http\Controllers\FootAlbumsController::class,'UploadMultiFile'])->name('foot_albums.UploadMultiFile');

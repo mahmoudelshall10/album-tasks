@@ -28,9 +28,11 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Name</th>
                                 <th>Created By</th>
                                 <th>Show</th>
                                 <th>Edit</th>
+                                {{-- <th>Copy</th> --}}
                                 <th>Delete</th>
                             </tr>
                         </thead>
@@ -39,34 +41,67 @@
 
                             <tr>
                                 <td>{{ $objalbum->id }}</td>
+                                <td>{{ $objalbum->name }}</td>
                                 <td>{{ $objalbum->CreatedBy->name }}</td>
                                 <td><a href="{{route('albums.show',$objalbum->id)}}" target="_blank" class="btn btn-success">Show</a></td>
                                 <td><a href="{{route('albums.edit',$objalbum->id)}}" target="_blank" class="btn btn-warning">Edit</a></td>
+
+                                {{--
+                                         <td><a href="#deModalCopy{{$objalbum->id}}" data-toggle="modal" class="btn btn-info">Copy</a>
+                                    <div class="modal fade" id="deModalCopy{{$objalbum->id}}" role="dialog">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Copy Confirmation</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Are you sure you want to Copy this album?</p>
+                                                    <form method="POST"  action="{{route('albums.copy_album',$objalbum->id)}}">
+                                                        @csrf
+                                                        <div class="form-group">
+                                                            <label for="name">Album Name</label>
+                                                            <input type="text" name="name" required class="form-control" id="name" value="{{ $objalbum->name }}">
+                                                        </div>
+                                                        <button type="submit" class="btn btn-success">Copy</button>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                    --}}
+
                                 <td><a href="#deModal{{$objalbum->id}}" data-toggle="modal" class="btn btn-danger">Delete</a>
-                                                      <div class="modal fade" id="deModal{{$objalbum->id}}" role="dialog">
-                                                          <div class="modal-dialog" role="document">
-                                                              <div class="modal-content">
-                                                                  <div class="modal-header">
-                                                                      <h5 class="modal-title">Delete Confirmation</h5>
-                                                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                      </button>
-                                                                  </div>
-                                                                  <div class="modal-body">
-                                                                      <p>Are you sure you want to delete this record?</p>
-                                                                  </div>
-                                                                  <div class="modal-footer">
-                                                                      <form method="POST"  action="{{route('albums.destroy',$objalbum->id)}}">
-                                                                          @csrf
-                                                                          @method('Delete')
-                                                                          <button type="submit" class="btn btn-danger">Confirm</button>
-                                                                      </form>
-                                                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                                      </div>
-                                                  </td>
+                                <div class="modal fade" id="deModal{{$objalbum->id}}" role="dialog">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Delete Confirmation</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Are you sure you want to delete this record?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <form method="POST"  action="{{route('albums.destroy',$objalbum->id)}}">
+                                                    @csrf
+                                                    @method('Delete')
+                                                    <button type="submit" class="btn btn-danger">Confirm</button>
+                                                </form>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
                             </tr>
                             @endforeach
                         </tbody>

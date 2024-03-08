@@ -8,7 +8,9 @@
                 <div class="card-header">
                     <a href="{{ route('albums.index') }}" class="btn btn-primary">Return Back</a>
                     <br>
+                    <br>
                     <p>Created By : {{ $album->CreatedBy->name }}</p>
+                    <p>Album Name : {{ $album->CreatedBy->name }}</p>
                 </div>
 
                 <div class="card-body">

@@ -53,20 +53,24 @@
                                     </ul>
                                 </div>
                             @endif
-
+                            <form action="{{ route('albums.store') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="form-group">
+                                    <label for="name">Album Name</label>
+                                    <input type="text" required name="name" class="form-control" id="name" value="{{ old('name') }}">
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                            <br>
                             <form action="{{ route('foot_albums.UploadMultiFile') }}" method="POST" class="dropzone" enctype="multipart/form-data">
                                 @csrf
                                 <div class="fallback">
                                     <input type="file" name="attachment" multiple id="attachment">
                                 </div>
                             </form>
-                            <br>
-                            <form action="{{ route('albums.store') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                            </form>
+
 
                             <br>
                             <table class="table table-bordered" id="myTable">
