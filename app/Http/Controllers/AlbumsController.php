@@ -195,7 +195,7 @@ class AlbumsController extends Controller
             // dd(File::exists($oldFilePath));
 
             if (File::exists($oldFilePath)) {
-                File::copy($newFilePath, $oldFilePath);
+                File::copy($oldFilePath,$sourceFilePath.$newFilePath);
             }
 
             $new_file->file_path  = $newFilePath;
