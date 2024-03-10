@@ -10,7 +10,7 @@
                     <br>
                     <br>
                     <p>Created By : {{ $album->CreatedBy->name }}</p>
-                    <p>Album Name : {{ $album->CreatedBy->name }}</p>
+                    <p>Album Name : {{ $album->name }}</p>
                 </div>
 
                 <div class="card-body">
