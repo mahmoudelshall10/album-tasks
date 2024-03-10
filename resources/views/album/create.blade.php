@@ -10,7 +10,7 @@
                 </div>
 
                 <div class="card-body">
-                    @if (\Session::has('success'))
+                @if (\Session::has('success'))
                     <div class="alert alert-success">
                         <ul>
                             <li>{!! \Session::get('success') !!}</li>
@@ -53,6 +53,15 @@
                                     </ul>
                                 </div>
                             @endif
+
+                            <div class="alert alert-success" id="div_success">
+                                <ul>Successfully Uploaded !!</ul>
+                            </div>
+
+                            <div class="alert alert-danger" id="div_error">
+                                <ul>Something Wrong !!</ul>
+                            </div>
+
                             <form action="{{ route('albums.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
@@ -114,7 +123,10 @@
 </div>
 
 <script type="text/javascript">
-
+    $(document).ready(function(){
+        $("#div_success").hide();
+        $("#div_error").hide();
+    });
 function deleteSingleId(id){
         $.ajax({
             url:"{{ route('RemoveSingleFile') }}",
@@ -170,12 +182,13 @@ function deleteSingleId(id){
             </tr>
         `);
     });
+    $("#div_success").show();
+    $("#div_error").hide();
     });
 
-
-
     myDropzone.on('error', function(file, errorMessage) {
-        alert('Error uploading file');
+        $("#div_success").hide();
+        $("#div_error").show();
     });
 
 </script>

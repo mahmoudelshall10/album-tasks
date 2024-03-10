@@ -140,7 +140,7 @@ class AlbumsController extends Controller
 
             foreach($attachments as $attachment){
 
-                $path = 'storage/app/attachments_folder/' . $attachment->file_path;
+                $path = public_path().'/storage/app/attachments_folder/' . $attachment->file_path;
                 if($attachment->file_path){
                     if(file_exists($path))
                     {
@@ -182,7 +182,7 @@ class AlbumsController extends Controller
         $newAlbum->updated_at  = now();
         $newAlbum->save();
 
-        $sourceFilePath = 'storage/app/attachments_folder/';
+        $sourceFilePath = public_path().'/storage/app/attachments_folder/';
 
         foreach($album->FootAlbums as $objalbum){
             $new_file = new FootAlbums();

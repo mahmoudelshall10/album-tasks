@@ -114,7 +114,6 @@
         var response = JSON.parse(response);
         var url = "{{ url('') }}";
         $.each(response, function(index, value) {
-        successfulUploads++;
         $("#myTable tbody").append(`
             <tr id="remove_single_${value.id}">
                 <td>${value.id}</td>

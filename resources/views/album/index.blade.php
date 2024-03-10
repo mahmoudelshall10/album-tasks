@@ -32,7 +32,7 @@
                                 <th>Created By</th>
                                 <th>Show</th>
                                 <th>Edit</th>
-                                {{-- <th>Copy</th> --}}
+                                <th>Copy</th>
                                 <th>Delete</th>
                             </tr>
                         </thead>
@@ -46,8 +46,8 @@
                                 <td><a href="{{route('albums.show',$objalbum->id)}}" target="_blank" class="btn btn-success">Show</a></td>
                                 <td><a href="{{route('albums.edit',$objalbum->id)}}" target="_blank" class="btn btn-warning">Edit</a></td>
 
-                                
-                                         <td><a href="#deModalCopy{{$objalbum->id}}" data-toggle="modal" class="btn btn-info">Copy</a>
+
+                                    <td><a href="#deModalCopy{{$objalbum->id}}" data-toggle="modal" class="btn btn-info">Copy</a>
                                     <div class="modal fade" id="deModalCopy{{$objalbum->id}}" role="dialog">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -75,7 +75,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                   
+
 
                                 <td><a href="#deModal{{$objalbum->id}}" data-toggle="modal" class="btn btn-danger">Delete</a>
                                 <div class="modal fade" id="deModal{{$objalbum->id}}" role="dialog">

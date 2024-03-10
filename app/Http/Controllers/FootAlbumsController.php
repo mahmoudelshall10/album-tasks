@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\FootAlbums;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 class FootAlbumsController extends Controller
 {
     function __construct()
@@ -16,7 +18,7 @@ class FootAlbumsController extends Controller
     public function RemoveSingleFile(Request $request)
     {
         $attachment = FootAlbums::find($request->id);
-        $path = 'storage/app/attachments_folder/' . $attachment->file_path;
+        $path = public_path().'/storage/app/attachments_folder/' . $attachment->file_path;
         if($attachment){
             if(file_exists($path))
             {
@@ -31,7 +33,7 @@ class FootAlbumsController extends Controller
     public function ShowFile($id)
     {
         $attachment = FootAlbums::find($id);
-        return view('albums.show_file',compact('attachment'));
+        return view('album.show_file',compact('attachment'));
     }
 
     public function uploadSingleImage(Request $request){
@@ -45,10 +47,10 @@ class FootAlbumsController extends Controller
         [
             'attachment'                  =>'Attachment',
         ];
-        
+
         $data = $this->validate($request , $rules , [] , $names);
 
-        $destinationPath = 'storage/app/attachments_folder/';
+        $destinationPath = public_path().'/storage/app/attachments_folder/';
 
         if (!file_exists($destinationPath)) {
 
@@ -82,7 +84,7 @@ class FootAlbumsController extends Controller
         $arrImage = [];
         $rules =
         [
-            'attachment' => 'required|array',
+            'attachment'    => 'required|array',
             'attachment.*'  => 'required|file|mimes:png,jpg,jpeg,pdf,doc,docx,txt,PDF,rtf,rar,xls,xlsx,gif|max:4000',
 
         ];
@@ -96,11 +98,11 @@ class FootAlbumsController extends Controller
 
             $id = $request->id ? $request->id : null;
 
-            $destinationPath = 'storage/app/attachments_folder/';
+            $destinationPath = public_path().'/storage/app/attachments_folder/';
 
             if (!file_exists($destinationPath)) {
 
-                mkdir($destinationPath, 755, true);
+                File::makeDirectory($destinationPath, 755, true);
             }
 
           if($request->has('attachment')) {
