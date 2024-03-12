@@ -1,0 +1,2 @@
+<iframe src="/storage/app/attachments_folder/<?php echo e($attachment->file_path); ?>" width="100%" height="100%"></iframe>
+<?php /**PATH E:\LaravelProject\album-task\resources\views/album/show_file.blade.php ENDPATH**/ ?>

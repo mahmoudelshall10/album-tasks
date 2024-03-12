@@ -144,6 +144,8 @@ function deleteSingleId(id){
         paramName: 'attachment',
         uploadMultiple: true,
         parallelUploads: 1,
+        addRemoveLinks : true,
+        dictRemoveFile : "Remove",
         maxFilesize: 4,
         acceptedFiles: ".jpeg,.jpg,.png,.gif,.xlsx,.xls,.rar.rtf,.PDF,.txt,.docx,.doc",
         sending:function(file, xhr, formData) {
@@ -168,7 +170,7 @@ function deleteSingleId(id){
                         <br><br>
                         <a href="${url+'/storage/app/attachments_folder'}/${value.file_path}" class="btn btn-info" download>Download</a>
                     ` : value.type === 'file' ? `
-                        <a href="${url+'foot_albums/show_file/'}/${value.file_path}" class="btn btn-info">Show File</a>
+                        <a href="${url+'/foot_albums/show_file'}/${value.id}" target="_blank" class="btn btn-info">Show File</a>
                         <a href="${url+'/storage/app/attachments_folder'}/${value.file_path}" class="btn btn-info" download>Download</a>
                     ` : ''}
                 </td>

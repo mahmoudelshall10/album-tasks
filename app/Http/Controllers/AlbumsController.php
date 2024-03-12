@@ -176,7 +176,7 @@ class AlbumsController extends Controller
         $album = Albums::find($id);
 
         $newAlbum = $album->replicate();
-        $newAlbum->name = $request->name;
+        $newAlbum->name = ($request->name == $album->name ? $request->name.'-Copy' : $request->name);
 
         $newAlbum->created_at  = now();
         $newAlbum->updated_at  = now();
@@ -191,8 +191,6 @@ class AlbumsController extends Controller
 
             $oldFilePath = $sourceFilePath . $objalbum->file_path;
             $newFilePath = $newAlbum->id . '-' . $objalbum->file_path;
-
-            // dd(File::exists($oldFilePath));
 
             if (File::exists($oldFilePath)) {
                 File::copy($oldFilePath,$sourceFilePath.$newFilePath);
